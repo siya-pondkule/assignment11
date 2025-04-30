@@ -1,0 +1,47 @@
+<h2 style="text-align: center; color: #2c3e50; margin-bottom: 1.5rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  Neo4j Paper Search
+</h2>
+
+<form (ngSubmit)="search()" style="background-color: #f9f9f9; max-width: 500px; margin: 2rem auto; padding: 2rem; border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <label style="display: block; margin-bottom: 1rem; font-weight: 600; color: #34495e;">
+    Paper A ID:
+    <input type="text" [(ngModel)]="paperA" name="paperA" required
+      style="width: 100%; padding: 0.6rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;" />
+  </label>
+
+  <label style="display: block; margin-bottom: 1rem; font-weight: 600; color: #34495e;">
+    Paper B ID:
+    <input type="text" [(ngModel)]="paperB" name="paperB"
+      style="width: 100%; padding: 0.6rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;" />
+  </label>
+
+  <label style="display: block; margin-bottom: 1rem; font-weight: 600; color: #34495e;">
+    Search Type:
+    <select [(ngModel)]="queryType" name="queryType"
+      style="width: 100%; padding: 0.6rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;">
+      <option value="citation">Check Citation (multi-level)</option>
+      <option value="classification">Show Classification</option>
+      <option value="custom">Custom Query</option>
+    </select>
+  </label>
+
+  <label *ngIf="queryType === 'custom'" style="display: block; margin-bottom: 1rem; font-weight: 600; color: #34495e;">
+    Enter Cypher Query:
+    <input type="text" [(ngModel)]="customQuery" name="customQuery"
+      style="width: 100%; padding: 0.6rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;" />
+  </label>
+
+  <button type="submit"
+    style="display: block; width: 100%; padding: 0.8rem; background-color: #3498db; color: white; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem;">
+    Search
+  </button>
+</form>
+
+<div *ngIf="result" style="background-color: #ecf0f1; max-width: 500px; margin: 2rem auto; padding: 1.5rem; border-radius: 16px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <h3 style="color: #2c3e50; margin-bottom: 1rem;">Result:</h3>
+  <pre *ngIf="result.length > 0; else noResults"
+    style="background-color: #fff; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.95rem; border: 1px solid #ddd;">{{ result | json }}</pre>
+  <ng-template #noResults>
+    <p style="color: #7f8c8d; text-align: center;">No results found.</p>
+  </ng-template>
+</div>
